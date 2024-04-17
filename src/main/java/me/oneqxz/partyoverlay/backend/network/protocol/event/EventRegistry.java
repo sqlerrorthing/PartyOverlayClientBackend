@@ -34,8 +34,11 @@ public class EventRegistry {
 
     private final Set<RegisteredPacketSubscriber> subscribers = new HashSet<>();
 
-    public void registerEvents(Object holder) {
-        subscribers.add(new RegisteredPacketSubscriber(holder));
+    public void registerEvents(Object... holder) {
+        for(Object o : holder)
+        {
+            subscribers.add(new RegisteredPacketSubscriber(o));
+        }
     }
 
     public void invoke(Packet packet, ChannelHandlerContext ctx) {
