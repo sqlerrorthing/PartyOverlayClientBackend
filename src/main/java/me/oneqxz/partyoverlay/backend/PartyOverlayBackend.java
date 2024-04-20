@@ -3,6 +3,7 @@ package me.oneqxz.partyoverlay.backend;
 import lombok.Getter;
 import lombok.Setter;
 import me.oneqxz.partyoverlay.backend.listeners.IEventListener;
+import me.oneqxz.partyoverlay.backend.listeners.InternalEvents;
 import me.oneqxz.partyoverlay.backend.network.ServerConnection;
 import me.oneqxz.partyoverlay.backend.providers.IMinecraft;
 import me.oneqxz.partyoverlay.backend.providers.IMinecraftSession;
@@ -23,9 +24,12 @@ public final class PartyOverlayBackend {
     @Setter
     @Nullable private AuthCredits authCredits = new AuthCredits("", "");
 
+    @Getter @Setter private Session session;
+
     private IMinecraft minecraft;
-    private IMinecraftSession session;
+    private IMinecraftSession minecraftSession;
     private IEventListener listener;
+    private InternalEvents internalEvents;
     private boolean init;
 
     public void init(@NotNull IMinecraft minecraft,
@@ -33,8 +37,9 @@ public final class PartyOverlayBackend {
                      @NotNull IEventListener listener)
     {
         this.minecraft = minecraft;
-        this.session = session;
+        this.minecraftSession = session;
         this.listener = listener;
+        this.internalEvents = new InternalEvents();
 
         ServerConnection.getInstance().connect();
         this.init = true;

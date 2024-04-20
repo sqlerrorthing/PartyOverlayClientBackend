@@ -11,7 +11,9 @@ import java.util.UUID;
 public interface IEventListener {
 
     void onInvalidCreditsDisconnect();
-    void onConnect(UUID sessionUUID, String username);
     void onAlreadyConnectedDisconnect();
+    void onServerErrorDisconnect();
+
+    void onConnect(UUID sessionUUID, String username);
 
 }

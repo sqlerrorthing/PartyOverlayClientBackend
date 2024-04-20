@@ -22,12 +22,12 @@
 
 package me.oneqxz.partyoverlay.backend.network.protocol;
 
-import me.oneqxz.partyoverlay.backend.network.protocol.io.Decoder;
-import me.oneqxz.partyoverlay.backend.network.protocol.io.Encoder;
+import lombok.Getter;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Packet implements Encoder, Decoder {
+@Getter
+public abstract class Packet implements IPackerBuffer {
 
     private long sessionId = ThreadLocalRandom.current().nextLong();
 
@@ -35,7 +35,4 @@ public abstract class Packet implements Encoder, Decoder {
         this.sessionId = sessionId;
     }
 
-    public long getSessionId() {
-        return sessionId;
-    }
 }

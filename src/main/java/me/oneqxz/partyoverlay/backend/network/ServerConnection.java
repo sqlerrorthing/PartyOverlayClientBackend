@@ -6,7 +6,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
+import me.oneqxz.partyoverlay.backend.PartyOverlayBackend;
 import me.oneqxz.partyoverlay.backend.listeners.AuthListener;
 import me.oneqxz.partyoverlay.backend.network.protocol.event.EventRegistry;
 import me.oneqxz.partyoverlay.backend.network.protocol.exception.PacketRegistrationException;
@@ -15,14 +17,16 @@ import me.oneqxz.partyoverlay.backend.network.protocol.handler.PacketDecoder;
 import me.oneqxz.partyoverlay.backend.network.protocol.handler.PacketEncoder;
 import me.oneqxz.partyoverlay.backend.network.protocol.registry.IPacketRegistry;
 import me.oneqxz.partyoverlay.backend.network.protocol.registry.SimplePacketRegistry;
+import me.oneqxz.partyoverlay.backend.sctructures.AuthCredits;
 
 @Log4j2
 public class ServerConnection {
 
     private static ServerConnection INSTANCE;
-    private static final long RECONNECT_DELAY_MS = 5000L;
+    private static final long RECONNECT_DELAY_MS = 2000L;
     private IPacketRegistry packetRegistry;
     private EventRegistry eventRegistry;
+    @Getter
     private ChannelFuture connection;
 
     public void connect()
@@ -72,6 +76,7 @@ public class ServerConnection {
                     Thread.sleep(RECONNECT_DELAY_MS);
                 } catch (Exception e) {
                     log.error("Can't connect to server!", e);
+                    PartyOverlayBackend.getInstance().getListener().onServerErrorDisconnect();
                     try {
                         Thread.sleep(RECONNECT_DELAY_MS);
                     } catch (InterruptedException ex) {
@@ -82,8 +87,15 @@ public class ServerConnection {
         }, "PartyOverlay server connection").start();
     }
 
-    public ChannelFuture getConnection() {
-        return connection;
+    public void disconnect(boolean resetCredits)
+    {
+        if(this.connection != null && this.connection.channel().isOpen())
+        {
+            if(resetCredits)
+                PartyOverlayBackend.getInstance().setAuthCredits(new AuthCredits("", ""));
+
+            this.connection.channel().close();
+        }
     }
 
     public static ServerConnection getInstance()
