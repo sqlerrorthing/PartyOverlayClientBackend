@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import me.oneqxz.partyoverlay.backend.PartyOverlayBackend;
 import me.oneqxz.partyoverlay.backend.listeners.AuthListener;
+import me.oneqxz.partyoverlay.backend.listeners.PartyListener;
 import me.oneqxz.partyoverlay.backend.network.protocol.event.EventRegistry;
 import me.oneqxz.partyoverlay.backend.network.protocol.exception.PacketRegistrationException;
 import me.oneqxz.partyoverlay.backend.network.protocol.handler.PacketChannelInboundHandler;
@@ -40,7 +41,8 @@ public class ServerConnection {
 
         eventRegistry = new EventRegistry();
         eventRegistry.registerEvents(
-                new AuthListener()
+                new AuthListener(),
+                new PartyListener()
         );
 
         EventLoopGroup workerGroup = new NioEventLoopGroup();

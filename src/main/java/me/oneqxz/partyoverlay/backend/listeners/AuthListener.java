@@ -10,6 +10,7 @@ import me.oneqxz.partyoverlay.backend.network.protocol.packets.c2s.CLogin;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SConnected;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SDisconnect;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SRequireLogin;
+import me.oneqxz.partyoverlay.backend.sctructures.ServerData;
 
 /**
  * PartyOverlayClientBackend
@@ -36,7 +37,11 @@ public class AuthListener {
     @PacketSubscriber
     public void onRequireInfo(SRequireLogin packet, ChannelHandlerContext ctx, Responder responder) {
         log.info("Received SRequireLogin, session id: {}", packet.getConnectionUUID().toString());
-        ctx.writeAndFlush(new CLogin(PartyOverlayBackend.getInstance().getMinecraftSession().getUsername(), PartyOverlayBackend.getInstance().getAuthCredits()));
+        responder.respond(new CLogin(PartyOverlayBackend.getInstance().getMinecraftSessionProvider().getUsername(), PartyOverlayBackend.getInstance().getAuthCredits(),
+                ServerData.builder()
+                        .serverIP(PartyOverlayBackend.getInstance().getMinecraftProvider().getCurrentServer())
+                        .build())
+        );
     }
 
     @PacketSubscriber

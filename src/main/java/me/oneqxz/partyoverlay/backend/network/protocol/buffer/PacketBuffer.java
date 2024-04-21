@@ -24,7 +24,6 @@ package me.oneqxz.partyoverlay.backend.network.protocol.buffer;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import io.netty.buffer.ByteBufProcessor;
 import io.netty.buffer.Unpooled;
 import io.netty.util.ByteProcessor;
 import me.oneqxz.partyoverlay.backend.network.protocol.io.CallableDecoder;
@@ -32,7 +31,10 @@ import me.oneqxz.partyoverlay.backend.network.protocol.io.CallableEncoder;
 import me.oneqxz.partyoverlay.backend.network.protocol.io.Decoder;
 import me.oneqxz.partyoverlay.backend.network.protocol.io.Encoder;
 
-import java.io.*;
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -1475,6 +1477,16 @@ public class PacketBuffer extends ByteBuf {
      */
     public boolean readBoolean() {
         return internalBuffer.readBoolean();
+    }
+
+    public Color readColor()
+    {
+        return new Color(readInt());
+    }
+
+    public void writeColor(Color color)
+    {
+        this.writeInt(color.getRGB());
     }
 
     /**

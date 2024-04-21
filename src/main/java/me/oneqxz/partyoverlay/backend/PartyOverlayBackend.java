@@ -1,12 +1,14 @@
 package me.oneqxz.partyoverlay.backend;
 
+import io.netty.channel.ChannelFuture;
 import lombok.Getter;
 import lombok.Setter;
 import me.oneqxz.partyoverlay.backend.listeners.IEventListener;
 import me.oneqxz.partyoverlay.backend.listeners.InternalEvents;
 import me.oneqxz.partyoverlay.backend.network.ServerConnection;
-import me.oneqxz.partyoverlay.backend.providers.IMinecraft;
-import me.oneqxz.partyoverlay.backend.providers.IMinecraftSession;
+import me.oneqxz.partyoverlay.backend.providers.IMinecraftProvider;
+import me.oneqxz.partyoverlay.backend.providers.IMinecraftSessionProvider;
+import me.oneqxz.partyoverlay.backend.providers.IPlayerProvider;
 import me.oneqxz.partyoverlay.backend.sctructures.AuthCredits;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,18 +28,24 @@ public final class PartyOverlayBackend {
 
     @Getter @Setter private Session session;
 
-    private IMinecraft minecraft;
-    private IMinecraftSession minecraftSession;
+    private IMinecraftProvider minecraftProvider;
+    private IMinecraftSessionProvider minecraftSessionProvider;
+    private IPlayerProvider playerProvider;
+
     private IEventListener listener;
     private InternalEvents internalEvents;
     private boolean init;
 
-    public void init(@NotNull IMinecraft minecraft,
-                     @NotNull IMinecraftSession session,
+    public void init(@NotNull IMinecraftProvider minecraft,
+                     @NotNull IMinecraftSessionProvider session,
+                     @NotNull IPlayerProvider playerProvider,
+
                      @NotNull IEventListener listener)
     {
-        this.minecraft = minecraft;
-        this.minecraftSession = session;
+        this.minecraftProvider = minecraft;
+        this.minecraftSessionProvider = session;
+        this.playerProvider = playerProvider;
+
         this.listener = listener;
         this.internalEvents = new InternalEvents();
 
@@ -47,7 +55,8 @@ public final class PartyOverlayBackend {
 
     public boolean isConnected()
     {
-        return ServerConnection.getInstance().getConnection().channel().isOpen();
+        ChannelFuture connection = ServerConnection.getInstance().getConnection();
+        return connection != null && connection.channel().isOpen();
     }
 
     public static PartyOverlayBackend getInstance()

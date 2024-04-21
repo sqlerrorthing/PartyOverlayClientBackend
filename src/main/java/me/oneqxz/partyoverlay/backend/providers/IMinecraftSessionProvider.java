@@ -6,7 +6,7 @@ package me.oneqxz.partyoverlay.backend.providers;
  * @author oneqxz
  * @since 17.04.2024
  */
-public interface IMinecraftSession {
+public interface IMinecraftSessionProvider {
 
     String getUsername();
 
