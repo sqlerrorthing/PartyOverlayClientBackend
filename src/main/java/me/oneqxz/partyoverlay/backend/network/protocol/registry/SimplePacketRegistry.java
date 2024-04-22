@@ -91,6 +91,8 @@ public class SimplePacketRegistry implements IPacketRegistry {
         this.registerPacket(7, CPartyCreate.class);
         this.registerPacket(8, SPartySync.class);
         this.registerPacket(9, CPartySync.class);
+
+        this.registerPacket(10, CSkinSync.class);
     }
 
 }

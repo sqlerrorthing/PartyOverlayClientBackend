@@ -10,6 +10,7 @@ import me.oneqxz.partyoverlay.backend.network.protocol.packets.c2s.CLogin;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SConnected;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SDisconnect;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SRequireLogin;
+import me.oneqxz.partyoverlay.backend.sctructures.AuthCredits;
 import me.oneqxz.partyoverlay.backend.sctructures.ServerData;
 
 /**
@@ -22,14 +23,16 @@ import me.oneqxz.partyoverlay.backend.sctructures.ServerData;
 public class AuthListener {
 
     @PacketSubscriber
-    public void onRequireInfo(SDisconnect packet, ChannelHandlerContext ctx, Responder responder) {
+    public void onDisconnect(SDisconnect packet, ChannelHandlerContext ctx, Responder responder) {
         PartyOverlayBackend.getInstance().setSession(null);
         switch (packet.getReason()) {
             case INVALID_CREDITS:
+                PartyOverlayBackend.getInstance().setAuthCredits(new AuthCredits("", ""));
                 PartyOverlayBackend.getInstance().getListener().onInvalidCreditsDisconnect();
                 break;
 
             case ALREADY_CONNECTED:
+                PartyOverlayBackend.getInstance().setAuthCredits(new AuthCredits("", ""));
                 PartyOverlayBackend.getInstance().getListener().onAlreadyConnectedDisconnect();
         }
     }

@@ -20,5 +20,6 @@ public class PartyMember {
 
     private float health, maxHealth, yaw, pitch;
     private double posX, posY, posZ;
+    private byte[] skin;
 
 }

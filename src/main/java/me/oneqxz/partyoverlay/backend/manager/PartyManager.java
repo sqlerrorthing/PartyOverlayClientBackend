@@ -6,9 +6,9 @@ import me.oneqxz.partyoverlay.backend.PartyOverlayBackend;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.c2s.CPartyCreate;
 import me.oneqxz.partyoverlay.backend.sctructures.PartyMember;
 import me.oneqxz.partyoverlay.backend.utils.ConnectionUtils;
+import me.oneqxz.partyoverlay.backend.utils.LinkedSet;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -17,13 +17,14 @@ import java.util.UUID;
  * @author oneqxz
  * @since 21.04.2024
  */
+@Setter
 @Getter
 public class PartyManager {
 
     private static PartyManager INSTANCE;
-    @Setter private UUID partyUUID;
-    @Setter private String partyName;
-    private final List<PartyMember> partyMembers = new LinkedList<>();
+    private UUID partyUUID;
+    private String partyName;
+    private Set<PartyMember> partyMembers = new LinkedSet<>();
 
     public boolean isOnParty()
     {

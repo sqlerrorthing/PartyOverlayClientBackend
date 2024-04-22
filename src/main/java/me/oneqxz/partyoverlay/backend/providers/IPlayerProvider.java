@@ -1,5 +1,7 @@
 package me.oneqxz.partyoverlay.backend.providers;
 
+import java.io.InputStream;
+
 /**
  * PartyOverlayClientBackend
  *
@@ -19,4 +21,6 @@ public interface IPlayerProvider {
 
     float getYaw();
     float getPitch();
+
+    InputStream getSkinInputStream();
 }

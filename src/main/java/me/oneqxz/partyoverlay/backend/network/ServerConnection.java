@@ -51,6 +51,14 @@ public class ServerConnection {
         new Thread(() -> {
             while (true) {
                 try {
+                    AuthCredits credits = PartyOverlayBackend.getInstance().getAuthCredits();
+
+                    if(credits.getUsername().isEmpty() || credits.getPassword().isEmpty())
+                    {
+                        Thread.sleep(RECONNECT_DELAY_MS);
+                        continue;
+                    }
+
                     Bootstrap b = new Bootstrap();
                     b.group(workerGroup)
                             .channel(NioSocketChannel.class)
@@ -69,7 +77,7 @@ public class ServerConnection {
                             })
                             .option(ChannelOption.AUTO_READ, true);
 
-                    ChannelFuture ctx = b.connect("localhost", 8080).sync();
+                    ChannelFuture ctx = b.connect("localhost", 1488).sync();
                     connection = ctx;
 
                     log.info("Connected!");

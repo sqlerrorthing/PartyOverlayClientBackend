@@ -51,34 +51,16 @@ public class SPartySync extends Packet {
             double posY = buffer.readDouble();
             double posZ = buffer.readDouble();
 
+            byte[] skin = buffer.readByteArray();
+
             Member member = new Member(memberId, username, minecraftUsername);
-            this.members[i] = new PartyMember(member, isOwner, playerColor, health, maxHealth, yaw, pitch, posX, posY, posZ);
+            this.members[i] = new PartyMember(member, isOwner, playerColor, health, maxHealth, yaw, pitch, posX, posY, posZ, skin);
         }
     }
 
     @Override
     public void write(PacketBuffer buffer) {
-        buffer.writeUUID(this.uuid);
-        buffer.writeUTF8(this.name);
-
-        buffer.writeInt(this.members.length);
-
-        for (PartyMember member : this.members) {
-            buffer.writeInt(member.getMember().getId());
-            buffer.writeUTF8(member.getMember().getUsername());
-            buffer.writeUTF8(member.getMember().getMinecraftUsername());
-            buffer.writeBoolean(member.isOwner());
-            buffer.writeColor(member.getPlayerColor());
-
-            buffer.writeFloat(member.getHealth());
-            buffer.writeFloat(member.getMaxHealth());
-            buffer.writeFloat(member.getYaw());
-            buffer.writeFloat(member.getPitch());
-
-            buffer.writeDouble(member.getPosX());
-            buffer.writeDouble(member.getPosY());
-            buffer.writeDouble(member.getPosZ());
-        }
+        throw new IllegalStateException();
     }
 
 }

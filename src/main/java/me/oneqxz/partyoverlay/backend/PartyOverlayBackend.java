@@ -10,8 +10,13 @@ import me.oneqxz.partyoverlay.backend.providers.IMinecraftProvider;
 import me.oneqxz.partyoverlay.backend.providers.IMinecraftSessionProvider;
 import me.oneqxz.partyoverlay.backend.providers.IPlayerProvider;
 import me.oneqxz.partyoverlay.backend.sctructures.AuthCredits;
+import me.oneqxz.partyoverlay.backend.worker.SkinSyncWorker;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * PartyOverlayClientBackend
@@ -36,6 +41,8 @@ public final class PartyOverlayBackend {
     private InternalEvents internalEvents;
     private boolean init;
 
+    private final ScheduledExecutorService scheduledExecutor = Executors.newScheduledThreadPool(1);
+
     public void init(@NotNull IMinecraftProvider minecraft,
                      @NotNull IMinecraftSessionProvider session,
                      @NotNull IPlayerProvider playerProvider,
@@ -50,6 +57,8 @@ public final class PartyOverlayBackend {
         this.internalEvents = new InternalEvents();
 
         ServerConnection.getInstance().connect();
+        scheduledExecutor.scheduleAtFixedRate(new SkinSyncWorker(), 0, 50, TimeUnit.MILLISECONDS);
+
         this.init = true;
     }
 
