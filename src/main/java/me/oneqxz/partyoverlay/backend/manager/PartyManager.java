@@ -26,6 +26,11 @@ public class PartyManager {
     private String partyName;
     private Set<PartyMember> partyMembers = new LinkedSet<>();
 
+    private PartyManager()
+    {
+
+    }
+
     public boolean isOnParty()
     {
         if(!PartyOverlayBackend.getInstance().isConnected() || partyUUID == null || partyName == null)

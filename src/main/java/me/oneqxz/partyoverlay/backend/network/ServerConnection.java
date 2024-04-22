@@ -55,7 +55,7 @@ public class ServerConnection {
 
                     if(credits.getUsername().isEmpty() || credits.getPassword().isEmpty())
                     {
-                        Thread.sleep(RECONNECT_DELAY_MS);
+                        Thread.sleep(200L);
                         continue;
                     }
 
