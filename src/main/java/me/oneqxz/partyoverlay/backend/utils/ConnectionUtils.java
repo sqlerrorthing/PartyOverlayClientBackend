@@ -14,7 +14,7 @@ public class ConnectionUtils {
 
     public static void sendPacketIfConnected(Packet packet)
     {
-        if(PartyOverlayBackend.getInstance().isConnected())
+        if(PartyOverlayBackend.getInstance().isConnected() && PartyOverlayBackend.getInstance().getSession() != null)
             ServerConnection.getInstance().getConnection().channel().writeAndFlush(packet);
     }
 

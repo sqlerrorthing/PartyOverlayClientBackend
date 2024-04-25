@@ -25,6 +25,7 @@ public class PartyManager {
     private UUID partyUUID;
     private String partyName;
     private Set<PartyMember> partyMembers = new LinkedSet<>();
+    private Set<String> partyInvited = new LinkedSet<>();
 
     private PartyManager()
     {
@@ -44,6 +45,7 @@ public class PartyManager {
         this.partyUUID = null;
         this.partyName = null;
         this.partyMembers.clear();
+        this.partyInvited.clear();
     }
 
     public void createParty()

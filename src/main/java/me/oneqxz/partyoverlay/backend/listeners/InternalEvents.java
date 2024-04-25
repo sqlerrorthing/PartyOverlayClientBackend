@@ -1,10 +1,11 @@
 package me.oneqxz.partyoverlay.backend.listeners;
 
-import me.oneqxz.partyoverlay.backend.network.protocol.packets.c2s.CMinecraftUsernameChanged;
-import me.oneqxz.partyoverlay.backend.network.protocol.packets.c2s.CStartPlaying;
-import me.oneqxz.partyoverlay.backend.network.protocol.packets.c2s.CStopPlaying;
+import me.oneqxz.partyoverlay.backend.manager.PartyManager;
+import me.oneqxz.partyoverlay.backend.network.protocol.packets.c2s.*;
 import me.oneqxz.partyoverlay.backend.sctructures.ServerData;
 import me.oneqxz.partyoverlay.backend.utils.ConnectionUtils;
+
+import java.util.UUID;
 
 /**
  * PartyOverlayClientBackend
@@ -31,5 +32,31 @@ public class InternalEvents {
     public void onPlayerStopPlaying()
     {
         ConnectionUtils.sendPacketIfConnected(new CStopPlaying());
+    }
+
+    public void removeFriend(int friendID)
+    {
+        ConnectionUtils.sendPacketIfConnected(new CFriendRemove(friendID));
+    }
+
+    public void inviteFriendToParty(int friendID)
+    {
+        ConnectionUtils.sendPacketIfConnected(new CFriendPartyInvite(friendID));
+    }
+
+    public void onPartyLeave()
+    {
+        ConnectionUtils.sendPacketIfConnected(new CPartyLeave());
+        PartyManager.getInstance().reset();
+    }
+
+    public void onPartyInviteAccept(UUID partyUUID)
+    {
+        ConnectionUtils.sendPacketIfConnected(new CPartyInviteAccept(partyUUID));
+    }
+
+    public void onPartyInviteRejected(UUID partyUUID)
+    {
+        ConnectionUtils.sendPacketIfConnected(new CPartyInviteReject(partyUUID));
     }
 }

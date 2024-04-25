@@ -25,6 +25,7 @@ public class SPartySync extends Packet {
     private UUID uuid;
     private String name;
     private PartyMember[] members;
+    private String[] partyInvited;
 
     @Override
     public void read(PacketBuffer buffer) {
@@ -55,6 +56,12 @@ public class SPartySync extends Packet {
 
             Member member = new Member(memberId, username, minecraftUsername);
             this.members[i] = new PartyMember(member, isOwner, playerColor, health, maxHealth, yaw, pitch, posX, posY, posZ, skin);
+        }
+
+        length = buffer.readInt();
+        this.partyInvited = new String[length];
+        for(int i = 0; i < length; i++) {
+            this.partyInvited[i] = buffer.readUTF8();
         }
     }
 

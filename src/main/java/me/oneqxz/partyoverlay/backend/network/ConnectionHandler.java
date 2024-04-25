@@ -10,6 +10,11 @@ import me.oneqxz.partyoverlay.backend.manager.PartyManager;
 public class ConnectionHandler extends ChannelInboundHandlerAdapter {
 
     @Override
+    public void handlerAdded(ChannelHandlerContext ctx) {
+
+    }
+
+    @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         reset();
     }
@@ -22,6 +27,7 @@ public class ConnectionHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         ctx.close();
+        ctx.fireChannelInactive();
         super.exceptionCaught(ctx, cause);
     }
 
