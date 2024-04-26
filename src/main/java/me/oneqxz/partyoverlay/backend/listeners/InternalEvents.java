@@ -1,5 +1,6 @@
 package me.oneqxz.partyoverlay.backend.listeners;
 
+import me.oneqxz.partyoverlay.backend.PartyOverlayBackend;
 import me.oneqxz.partyoverlay.backend.manager.PartyManager;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.c2s.*;
 import me.oneqxz.partyoverlay.backend.sctructures.ServerData;
@@ -47,6 +48,10 @@ public class InternalEvents {
     public void onPartyLeave()
     {
         ConnectionUtils.sendPacketIfConnected(new CPartyLeave());
+
+        if(PartyManager.getInstance().isOnParty())
+            PartyOverlayBackend.getInstance().getListener().onPartyLeaved(PartyManager.getInstance().getPartyUUID());
+
         PartyManager.getInstance().reset();
     }
 

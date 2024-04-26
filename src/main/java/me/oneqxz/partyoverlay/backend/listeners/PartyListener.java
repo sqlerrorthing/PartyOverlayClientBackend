@@ -9,6 +9,8 @@ import me.oneqxz.partyoverlay.backend.manager.PartyManager;
 import me.oneqxz.partyoverlay.backend.network.protocol.event.PacketSubscriber;
 import me.oneqxz.partyoverlay.backend.network.protocol.io.Responder;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.c2s.CPartySync;
+import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SNewInvite;
+import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SPartyInviteResult;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SPartyInvitesSync;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SPartySync;
 import me.oneqxz.partyoverlay.backend.providers.IPlayerProvider;
@@ -59,6 +61,20 @@ public class PartyListener {
     public void onPartyInvitesSync(SPartyInvitesSync packet, ChannelHandlerContext ctx, Responder responder) {
         PartyInvitesManager.getInstance().setLastUpdatedPartyInvites(System.currentTimeMillis());
         PartyInvitesManager.getInstance().setInvites(packet.getInvites());
+    }
+
+
+    @PacketSubscriber
+    @SneakyThrows
+    public void onPartyInviteResult(SPartyInviteResult packet, ChannelHandlerContext ctx, Responder responder) {
+        PartyOverlayBackend.getInstance().getListener().onPartyInviteSend(packet.getResult());
+    }
+
+
+    @PacketSubscriber
+    @SneakyThrows
+    public void onPartyInviteReceived(SNewInvite packet, ChannelHandlerContext ctx, Responder responder) {
+        PartyOverlayBackend.getInstance().getListener().onPartyInviteReceived(packet.getPartyUUID(), packet.getInviterUsername(), packet.getInviterMinecraftUsername());
     }
 
 }
