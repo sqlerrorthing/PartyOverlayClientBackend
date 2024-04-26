@@ -62,6 +62,15 @@ public final class PartyOverlayBackend {
         this.init = true;
     }
 
+    public void shutdown()
+    {
+        if(this.isConnected())
+        {
+            this.authCredits = new AuthCredits("", "");
+            ServerConnection.getInstance().getConnection().channel().close();
+        }
+    }
+
     public boolean isConnected()
     {
         ChannelFuture connection = ServerConnection.getInstance().getConnection();
