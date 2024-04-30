@@ -9,10 +9,7 @@ import me.oneqxz.partyoverlay.backend.manager.PartyManager;
 import me.oneqxz.partyoverlay.backend.network.protocol.event.PacketSubscriber;
 import me.oneqxz.partyoverlay.backend.network.protocol.io.Responder;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.c2s.CPartySync;
-import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SNewInvite;
-import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SPartyInviteResult;
-import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SPartyInvitesSync;
-import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SPartySync;
+import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.*;
 import me.oneqxz.partyoverlay.backend.providers.IPlayerProvider;
 import me.oneqxz.partyoverlay.backend.sctructures.PartyMember;
 import me.oneqxz.partyoverlay.backend.utils.LinkedSet;
@@ -56,6 +53,7 @@ public class PartyListener {
         }
     }
 
+
     @PacketSubscriber
     @SneakyThrows
     public void onPartyInvitesSync(SPartyInvitesSync packet, ChannelHandlerContext ctx, Responder responder) {
@@ -75,6 +73,20 @@ public class PartyListener {
     @SneakyThrows
     public void onPartyInviteReceived(SNewInvite packet, ChannelHandlerContext ctx, Responder responder) {
         PartyOverlayBackend.getInstance().getListener().onPartyInviteReceived(packet.getPartyUUID(), packet.getInviterUsername(), packet.getInviterMinecraftUsername());
+    }
+
+
+    @PacketSubscriber
+    @SneakyThrows
+    public void onPartyMemberJoin(SMemberPartyJoin packet, ChannelHandlerContext ctx, Responder responder) {
+        PartyOverlayBackend.getInstance().getListener().onMemberPartyJoin(packet.getId(), packet.getUsername(), packet.getMinecraftUsername(), packet.getColor());
+    }
+
+
+    @PacketSubscriber
+    @SneakyThrows
+    public void onPartyMemberLeave(SMemberPartyLeave packet, ChannelHandlerContext ctx, Responder responder) {
+        PartyOverlayBackend.getInstance().getListener().onMemberPartyLeave(packet.getId(), packet.getUsername(), packet.getMinecraftUsername());
     }
 
 }

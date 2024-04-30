@@ -1,5 +1,6 @@
 package me.oneqxz.partyoverlay.backend.listeners;
 
+import me.oneqxz.partyoverlay.backend.sctructures.FriendRequestResult;
 import me.oneqxz.partyoverlay.backend.sctructures.InviteResult;
 
 import java.awt.*;
@@ -94,4 +95,11 @@ public interface IEventListener {
      * @param inviterMinecraftName username in Minecraft.
      */
     void onPartyInviteReceived(UUID partyUUID, String inviterUsername, String inviterMinecraftName);
+
+    /**
+     * is invoked when a user sends a friend request to another user
+     *
+     * @param status request status
+     */
+    void onFriendRequestSend(FriendRequestResult status);
 }

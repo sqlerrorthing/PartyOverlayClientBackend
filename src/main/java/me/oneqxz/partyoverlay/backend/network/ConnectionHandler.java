@@ -4,6 +4,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import me.oneqxz.partyoverlay.backend.PartyOverlayBackend;
+import me.oneqxz.partyoverlay.backend.manager.FriendManager;
 import me.oneqxz.partyoverlay.backend.manager.PartyManager;
 
 @ChannelHandler.Sharable
@@ -35,5 +36,6 @@ public class ConnectionHandler extends ChannelInboundHandlerAdapter {
     {
         PartyOverlayBackend.getInstance().setSession(null);
         PartyManager.getInstance().reset();
+        FriendManager.getInstance().reset();
     }
 }

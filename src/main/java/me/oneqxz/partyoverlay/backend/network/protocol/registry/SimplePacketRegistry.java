@@ -109,6 +109,12 @@ public class SimplePacketRegistry implements IPacketRegistry {
 
         this.registerPacket(22, SPartyInviteResult.class);
         this.registerPacket(23, SNewInvite.class);
+
+        this.registerPacket(24, CFriendRequest.class);
+        this.registerPacket(25, SFriendRequestResult.class);
+
+        this.registerPacket(26, CAcceptFriendRequest.class);
+        this.registerPacket(27, CRejectFriendRequest.class);
     }
 
 }

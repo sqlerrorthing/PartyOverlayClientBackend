@@ -2,7 +2,7 @@ package me.oneqxz.partyoverlay.backend.manager;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.oneqxz.partyoverlay.backend.sctructures.friend.FriendRequest;
+import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SFriendsSync;
 import me.oneqxz.partyoverlay.backend.sctructures.friend.OfflineFriend;
 import me.oneqxz.partyoverlay.backend.sctructures.friend.OnlineFriend;
 import me.oneqxz.partyoverlay.backend.utils.LinkedSet;
@@ -23,7 +23,7 @@ public class FriendManager {
 
     private Set<OnlineFriend> onlineFriends = new LinkedSet<>();
     private Set<OfflineFriend> offlineFriends = new LinkedSet<>();
-    private Set<FriendRequest> friendRequests = new LinkedSet<>();
+    private Set<SFriendsSync.FriendRequest> friendRequests = new LinkedSet<>();
 
     private FriendManager()
     {

@@ -6,7 +6,10 @@ import me.oneqxz.partyoverlay.backend.PartyOverlayBackend;
 import me.oneqxz.partyoverlay.backend.manager.FriendManager;
 import me.oneqxz.partyoverlay.backend.network.protocol.event.PacketSubscriber;
 import me.oneqxz.partyoverlay.backend.network.protocol.io.Responder;
-import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.*;
+import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SFriendJoin;
+import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SFriendLeave;
+import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SFriendRequestResult;
+import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.SFriendsSync;
 
 /**
  * PartyOverlayClientBackend
@@ -38,18 +41,10 @@ public class FriendListener {
         PartyOverlayBackend.getInstance().getListener().onFriendJoin(packet.getId(), packet.getUsername(), packet.getMinecraftUsername());
     }
 
-
     @PacketSubscriber
     @SneakyThrows
-    public void onPartyMemberJoin(SMemberPartyJoin packet, ChannelHandlerContext ctx, Responder responder) {
-        PartyOverlayBackend.getInstance().getListener().onMemberPartyJoin(packet.getId(), packet.getUsername(), packet.getMinecraftUsername(), packet.getColor());
-    }
-
-
-    @PacketSubscriber
-    @SneakyThrows
-    public void onPartyMemberLeave(SMemberPartyLeave packet, ChannelHandlerContext ctx, Responder responder) {
-        PartyOverlayBackend.getInstance().getListener().onMemberPartyLeave(packet.getId(), packet.getUsername(), packet.getMinecraftUsername());
+    public void onFriendRequestResult(SFriendRequestResult packet, ChannelHandlerContext ctx, Responder responder) {
+        PartyOverlayBackend.getInstance().getListener().onFriendRequestSend(packet.getResult());
     }
 
 }

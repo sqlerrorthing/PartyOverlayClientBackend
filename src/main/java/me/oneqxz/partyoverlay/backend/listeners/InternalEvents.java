@@ -64,4 +64,19 @@ public class InternalEvents {
     {
         ConnectionUtils.sendPacketIfConnected(new CPartyInviteReject(partyUUID));
     }
+
+    public void onFriendRequestSend(String username)
+    {
+        ConnectionUtils.sendPacketIfConnected(new CFriendRequest(username));
+    }
+
+    public void acceptFriendRequest(String username)
+    {
+        ConnectionUtils.sendPacketIfConnected(new CAcceptFriendRequest(username));
+    }
+
+    public void rejectFriendRequest(String username)
+    {
+        ConnectionUtils.sendPacketIfConnected(new CRejectFriendRequest(username));
+    }
 }
