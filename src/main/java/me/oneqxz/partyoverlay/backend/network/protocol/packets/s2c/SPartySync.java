@@ -7,6 +7,7 @@ import me.oneqxz.partyoverlay.backend.network.protocol.Packet;
 import me.oneqxz.partyoverlay.backend.network.protocol.buffer.PacketBuffer;
 import me.oneqxz.partyoverlay.backend.sctructures.Member;
 import me.oneqxz.partyoverlay.backend.sctructures.PartyMember;
+import me.oneqxz.partyoverlay.backend.sctructures.WrappedItemStack;
 
 import java.awt.*;
 import java.util.UUID;
@@ -53,9 +54,19 @@ public class SPartySync extends Packet {
             double posZ = buffer.readDouble();
 
             byte[] skin = buffer.readByteArray();
+            int hurtTime = buffer.readInt();
+
+            WrappedItemStack mainHandItem = WrappedItemStack.EMPTY().read(buffer);
+            WrappedItemStack offHandItem = WrappedItemStack.EMPTY().read(buffer);
+
+            WrappedItemStack helmetItem = WrappedItemStack.EMPTY().read(buffer);
+            WrappedItemStack chestplateItem = WrappedItemStack.EMPTY().read(buffer);
+            WrappedItemStack leggingsItem = WrappedItemStack.EMPTY().read(buffer);
+            WrappedItemStack bootsItem = WrappedItemStack.EMPTY().read(buffer);
 
             Member member = new Member(memberId, username, minecraftUsername);
-            this.members[i] = new PartyMember(member, isOwner, playerColor, health, maxHealth, yaw, pitch, posX, posY, posZ, skin);
+            this.members[i] = new PartyMember(member, isOwner, playerColor, health, maxHealth, yaw, pitch, posX, posY, posZ, skin,
+                    hurtTime, mainHandItem, offHandItem, helmetItem, chestplateItem, leggingsItem, bootsItem);
         }
 
         length = buffer.readInt();

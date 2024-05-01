@@ -1,5 +1,7 @@
 package me.oneqxz.partyoverlay.backend.providers;
 
+import me.oneqxz.partyoverlay.backend.sctructures.WrappedItemStack;
+
 import java.io.InputStream;
 
 /**
@@ -22,5 +24,15 @@ public interface IPlayerProvider {
     float getYaw();
     float getPitch();
 
+    int getHurtTime();
+
     InputStream getSkinInputStream();
+
+    WrappedItemStack getMainHandItem();
+    WrappedItemStack getOffHandItem();
+
+    WrappedItemStack getHelmetItem();
+    WrappedItemStack getChestplateItem();
+    WrappedItemStack getLeggingsItem();
+    WrappedItemStack getBootsItem();
 }

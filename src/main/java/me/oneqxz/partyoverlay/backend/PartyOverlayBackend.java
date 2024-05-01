@@ -6,6 +6,7 @@ import lombok.Setter;
 import me.oneqxz.partyoverlay.backend.listeners.IEventListener;
 import me.oneqxz.partyoverlay.backend.listeners.InternalEvents;
 import me.oneqxz.partyoverlay.backend.network.ServerConnection;
+import me.oneqxz.partyoverlay.backend.providers.IDisplayProvider;
 import me.oneqxz.partyoverlay.backend.providers.IMinecraftProvider;
 import me.oneqxz.partyoverlay.backend.providers.IMinecraftSessionProvider;
 import me.oneqxz.partyoverlay.backend.providers.IPlayerProvider;
@@ -36,6 +37,7 @@ public final class PartyOverlayBackend {
     private IMinecraftProvider minecraftProvider;
     private IMinecraftSessionProvider minecraftSessionProvider;
     private IPlayerProvider playerProvider;
+    private IDisplayProvider displayProvider;
 
     private IEventListener listener;
     private InternalEvents internalEvents;
@@ -46,12 +48,14 @@ public final class PartyOverlayBackend {
     public void init(@NotNull IMinecraftProvider minecraft,
                      @NotNull IMinecraftSessionProvider session,
                      @NotNull IPlayerProvider playerProvider,
+                     @NotNull IDisplayProvider displayProvider,
 
                      @NotNull IEventListener listener)
     {
         this.minecraftProvider = minecraft;
         this.minecraftSessionProvider = session;
         this.playerProvider = playerProvider;
+        this.displayProvider = displayProvider;
 
         this.listener = listener;
         this.internalEvents = new InternalEvents();

@@ -48,7 +48,17 @@ public class PartyListener {
                     provider.getPitch(),
                     provider.getX(),
                     provider.getY(),
-                    provider.getZ()
+                    provider.getZ(),
+
+                    provider.getHurtTime(),
+
+                    provider.getMainHandItem(),
+                    provider.getOffHandItem(),
+
+                    provider.getHelmetItem(),
+                    provider.getChestplateItem(),
+                    provider.getLeggingsItem(),
+                    provider.getBootsItem()
             ));
         }
     }

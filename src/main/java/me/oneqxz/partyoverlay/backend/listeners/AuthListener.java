@@ -50,7 +50,7 @@ public class AuthListener {
     @PacketSubscriber
     public void onConnect(SConnected packet, ChannelHandlerContext ctx, Responder responder) {
         log.info("Logged as {}", packet.getUsername());
-        PartyOverlayBackend.getInstance().setSession(new Session(packet.getSessionUUID(), packet.getUsername()));
+        PartyOverlayBackend.getInstance().setSession(new Session(packet.getSessionUUID(), packet.getUsername(), packet.getId()));
         PartyOverlayBackend.getInstance().getListener().onConnect(packet.getSessionUUID(), packet.getUsername());
     }
 

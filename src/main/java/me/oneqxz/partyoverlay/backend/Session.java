@@ -16,4 +16,5 @@ import java.util.UUID;
 public class Session {
     private UUID sessionUUID;
     private String username;
+    private int id;
 }
