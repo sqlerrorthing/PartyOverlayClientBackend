@@ -26,6 +26,9 @@ public interface IPlayerProvider {
 
     int getHurtTime();
 
+    String getDimension();
+    String getCurrentServer();
+
     InputStream getSkinInputStream();
 
     WrappedItemStack getMainHandItem();

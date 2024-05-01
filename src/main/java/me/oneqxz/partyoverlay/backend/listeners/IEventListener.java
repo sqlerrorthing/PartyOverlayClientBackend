@@ -2,6 +2,7 @@ package me.oneqxz.partyoverlay.backend.listeners;
 
 import me.oneqxz.partyoverlay.backend.sctructures.FriendRequestResult;
 import me.oneqxz.partyoverlay.backend.sctructures.InviteResult;
+import me.oneqxz.partyoverlay.backend.sctructures.Ping;
 
 import java.awt.*;
 import java.util.UUID;
@@ -102,4 +103,7 @@ public interface IEventListener {
      * @param status request status
      */
     void onFriendRequestSend(FriendRequestResult status);
+
+    void onPingAdd(Ping ping);
+    void onPingRemove(UUID pingUUID);
 }

@@ -6,12 +6,14 @@ import lombok.extern.log4j.Log4j2;
 import me.oneqxz.partyoverlay.backend.PartyOverlayBackend;
 import me.oneqxz.partyoverlay.backend.manager.PartyInvitesManager;
 import me.oneqxz.partyoverlay.backend.manager.PartyManager;
+import me.oneqxz.partyoverlay.backend.manager.PingManager;
 import me.oneqxz.partyoverlay.backend.network.protocol.event.PacketSubscriber;
 import me.oneqxz.partyoverlay.backend.network.protocol.io.Responder;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.c2s.CPartySync;
 import me.oneqxz.partyoverlay.backend.network.protocol.packets.s2c.*;
 import me.oneqxz.partyoverlay.backend.providers.IPlayerProvider;
 import me.oneqxz.partyoverlay.backend.sctructures.PartyMember;
+import me.oneqxz.partyoverlay.backend.sctructures.Ping;
 import me.oneqxz.partyoverlay.backend.utils.LinkedSet;
 
 import java.util.Arrays;
@@ -51,6 +53,7 @@ public class PartyListener {
                     provider.getZ(),
 
                     provider.getHurtTime(),
+                    provider.getDimension(),
 
                     provider.getMainHandItem(),
                     provider.getOffHandItem(),
@@ -97,6 +100,30 @@ public class PartyListener {
     @SneakyThrows
     public void onPartyMemberLeave(SMemberPartyLeave packet, ChannelHandlerContext ctx, Responder responder) {
         PartyOverlayBackend.getInstance().getListener().onMemberPartyLeave(packet.getId(), packet.getUsername(), packet.getMinecraftUsername());
+    }
+
+
+    @PacketSubscriber
+    @SneakyThrows
+    public void onPingAdd(SAddPing packet, ChannelHandlerContext ctx, Responder responder) {
+        Ping ping = new Ping(
+                packet.getPingUUID(),
+                packet.getX(),
+                packet.getY(),
+                packet.getZ(),
+                packet.getFrom()
+        );
+
+        PingManager.getInstance().add(ping);
+
+        PartyOverlayBackend.getInstance().getListener().onPingAdd(ping);
+    }
+
+    @PacketSubscriber
+    @SneakyThrows
+    public void onPingRemove(SRemovePing packet, ChannelHandlerContext ctx, Responder responder) {
+        PingManager.getInstance().remove(packet.getPingUUID());
+        PartyOverlayBackend.getInstance().getListener().onPingRemove(packet.getPingUUID());
     }
 
 }

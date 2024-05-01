@@ -46,6 +46,7 @@ public class PartyManager {
         this.partyName = null;
         this.partyMembers.clear();
         this.partyInvited.clear();
+        PingManager.getInstance().clear();
     }
 
     public void createParty()

@@ -79,4 +79,9 @@ public class InternalEvents {
     {
         ConnectionUtils.sendPacketIfConnected(new CRejectFriendRequest(username));
     }
+
+    public void sendPing(double x, double y, double z)
+    {
+        ConnectionUtils.sendPacketIfConnected(new CPing(x, y, z));
+    }
 }

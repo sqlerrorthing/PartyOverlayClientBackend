@@ -26,6 +26,8 @@ public class PartyMember {
     private byte[] skin;
 
     private int hurtTime;
+    private String dimension;
+    private String server;
 
     private WrappedItemStack mainHandItem;
     private WrappedItemStack offHandItem;
@@ -62,6 +64,16 @@ public class PartyMember {
     public boolean isSelf()
     {
         return member.getId() == (PartyOverlayBackend.getInstance().getSession() != null ? PartyOverlayBackend.getInstance().getSession().getId() : Integer.MIN_VALUE);
+    }
+
+    public boolean isSameWorldAndDimension()
+    {
+        boolean sameDimension = this.dimension.equals(PartyOverlayBackend.getInstance().getPlayerProvider().getDimension());
+        boolean sameServer = this.server.equals(PartyOverlayBackend.getInstance().getPlayerProvider().getCurrentServer());
+        boolean isNotSingleplayer = !this.server.equals("singleplayer");
+        boolean isNotNull = !this.server.equals("null");
+
+        return sameDimension && sameServer && isNotSingleplayer && isNotNull;
     }
 
 }
