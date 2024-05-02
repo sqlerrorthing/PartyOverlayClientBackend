@@ -26,6 +26,8 @@ public interface IPlayerProvider {
 
     int getHurtTime();
 
+    int getEntityId();
+
     String getDimension();
     String getCurrentServer();
 

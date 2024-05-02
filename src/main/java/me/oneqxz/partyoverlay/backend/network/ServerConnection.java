@@ -79,7 +79,7 @@ public class ServerConnection {
                             })
                             .option(ChannelOption.AUTO_READ, true);
 
-                    ChannelFuture ctx = b.connect("localhost", 1488).sync();
+                    ChannelFuture ctx = b.connect("localhost", 1489).sync();
                     connection = ctx;
 
                     log.info("Connected!");

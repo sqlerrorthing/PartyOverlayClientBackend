@@ -1,7 +1,9 @@
 package me.oneqxz.partyoverlay.backend.sctructures;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
@@ -12,12 +14,13 @@ import java.util.UUID;
  * @since 01.05.2024
  */
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Ping {
 
-    private UUID uuid;
-    private double x, y, z;
+    @NonNull private UUID uuid;
+    @NonNull private double x, y, z;
 
-    private int from;
+    @NonNull private int from;
+    @Setter private boolean rendering3D;
 
 }

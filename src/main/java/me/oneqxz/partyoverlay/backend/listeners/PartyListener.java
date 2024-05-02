@@ -53,6 +53,8 @@ public class PartyListener {
                     provider.getZ(),
 
                     provider.getHurtTime(),
+                    provider.getEntityId(),
+
                     provider.getDimension(),
 
                     provider.getMainHandItem(),

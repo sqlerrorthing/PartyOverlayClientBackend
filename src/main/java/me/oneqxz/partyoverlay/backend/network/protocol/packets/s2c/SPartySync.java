@@ -55,6 +55,7 @@ public class SPartySync extends Packet {
 
             byte[] skin = buffer.readByteArray();
             int hurtTime = buffer.readInt();
+            int entityID = buffer.readInt();
 
             String dimension = buffer.readUTF8();
             String server = buffer.readUTF8();
@@ -69,7 +70,7 @@ public class SPartySync extends Packet {
 
             Member member = new Member(memberId, username, minecraftUsername);
             this.members[i] = new PartyMember(member, isOwner, playerColor, health, maxHealth, yaw, pitch, posX, posY, posZ, skin,
-                    hurtTime, dimension, server, mainHandItem, offHandItem, helmetItem, chestplateItem, leggingsItem, bootsItem);
+                    hurtTime, entityID, dimension, server, mainHandItem, offHandItem, helmetItem, chestplateItem, leggingsItem, bootsItem);
         }
 
         length = buffer.readInt();

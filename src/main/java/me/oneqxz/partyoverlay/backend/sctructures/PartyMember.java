@@ -26,6 +26,7 @@ public class PartyMember {
     private byte[] skin;
 
     private int hurtTime;
+    private int entityID;
     private String dimension;
     private String server;
 
